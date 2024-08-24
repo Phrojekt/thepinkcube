@@ -15,18 +15,18 @@ type MeshRef = {
 const Cube =({position, size,}:GenericType) => {
   const ref = useRef<MeshRef>()
 
-  const [isHovered, setIsHovered] = useState(false)
+  const [isClicked, setIsClicked] = useState(false)
 
   useFrame((state, delta) => { 
     if(ref.current) {
-      const speed = isHovered ? 1 : 0.2
+      const speed = isClicked ? 1 : 0.2
       ref.current.rotation.y += delta * speed
     }
   })
   return(
-    <mesh position ={position} ref={ref} onPointerEnter={(event) => (event.stopPropagation(), setIsHovered(true))} onPointerLeave={() => setIsHovered(false)}>
+    <mesh position ={position} ref={ref} onClick={() => setIsClicked(!isClicked)}>
           <boxGeometry args={size} />
-          <meshStandardMaterial color={isHovered ? "hotpink" : "lightgreen" } />
+          <meshStandardMaterial color={isClicked ? "hotpink" : "lightgreen" } />
         </mesh>
   )
 }
